@@ -33,13 +33,13 @@ public class UsuarioController {
     @DeleteMapping("/{usernameLogin}")
     public ResponseEntity<Usuario> removerUsuarioPeloLogin (@PathVariable("usernameLogin") String usernameLogin){
         Usuario usuarioRemovido = usuarioService.removerPorLogin(usernameLogin);
-        return ResponseEntity.ok(usuarioRemovido);
+        return new ResponseEntity<>(usuarioRemovido, HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> alterarNomeESobrenome(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioAlterado = usuarioService.alterarNomeESobrenomeo(id, usuario);
-        return ResponseEntity.ok(usuarioAlterado);
+        return new ResponseEntity<>(usuarioAlterado, HttpStatus.NO_CONTENT);
     }
 
 }
