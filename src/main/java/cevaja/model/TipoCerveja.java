@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 @Entity
-@Table
+@Table(name = "tipo_cerveja")
 @Data
 public class TipoCerveja {
 
@@ -15,6 +15,8 @@ public class TipoCerveja {
 
     @Column
     private String nome;
+
     @Column
     private BigDecimal valor;
+
 }

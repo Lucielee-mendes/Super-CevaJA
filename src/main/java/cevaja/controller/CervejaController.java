@@ -37,13 +37,12 @@ public class CervejaController {
         TipoCerveja tipoCervejaRemovido = cervejaService.removerPeloNome(nome);
         return new ResponseEntity<>(tipoCervejaRemovido, HttpStatus.ACCEPTED);
     }
-    @PutMapping("/{nome}")
-    public ResponseEntity<TipoCerveja> alterarValorTipoCerveja(
-            @PathVariable("nome") String nome,
-            @RequestParam("valor") BigDecimal valor) {
-        TipoCerveja tipoCervejaAlterado = cervejaService.alterarValorTipoCerveja(nome, valor);
+    @PutMapping
+    public ResponseEntity<TipoCerveja> alterarValorTipoCerveja(@RequestBody TipoCervejaDTO tipoCervejaDTO) {
+        String nomeCerveja = tipoCervejaDTO.getNome();
+        BigDecimal valorCerveja = tipoCervejaDTO.getValor();
+        TipoCerveja tipoCervejaAlterado = cervejaService.alterarValorTipoCerveja(nomeCerveja, valorCerveja);
         return new ResponseEntity<>(tipoCervejaAlterado, HttpStatus.NO_CONTENT);
     }
+
 }
-
-
