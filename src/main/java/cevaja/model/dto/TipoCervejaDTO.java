@@ -9,6 +9,7 @@ public class TipoCervejaDTO {
 
     private String nome;
     private BigDecimal valor;
+    private int quantidade;
 
     public TipoCervejaDTO(String nome, BigDecimal valor) {
         this.nome = nome;
