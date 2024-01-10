@@ -18,6 +18,7 @@ public class TipoCerveja {
 
     @Column
     private BigDecimal valor;
+
     @Column
     private int quantidade;
 

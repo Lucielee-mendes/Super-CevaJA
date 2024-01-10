@@ -7,7 +7,6 @@ import cevaja.model.Usuario;
 import cevaja.model.dto.PedidoDTO;
 import cevaja.repository.PedidoRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,6 +20,8 @@ public class PedidoService {
     private UsuarioService usuarioService;
     private PocTemperaturaService pocTemperaturaService;
     private PedidoRepository pedidoRepository;
+
+    private static final int QUANTIDADE_PARA_DESCONTO = 10;
 
     public PedidoService(UsuarioService usuarioService, PocTemperaturaService pocTemperaturaService, PedidoRepository pedidoRepository) {
         this.usuarioService = usuarioService;
@@ -42,8 +43,9 @@ public class PedidoService {
         }
 
         List<TipoCerveja> tiposCerveja = pedidoDTO.getTipoCerveja();
+        int quantidadeTotalCervejas = calcularTotalCervejas(pedidoDTO);
 
-        if (tiposCerveja.size() >= 10){
+        if (quantidadeTotalCervejas >= QUANTIDADE_PARA_DESCONTO) {
             BigDecimal desconto = new BigDecimal("0.10");
             for(TipoCerveja tipoCerveja: tiposCerveja){
                 BigDecimal valorAtual = tipoCerveja.getValor();
@@ -71,8 +73,21 @@ public class PedidoService {
         Pedido pedido = new Pedido();
         pedido.setUsuario(usuarioExiste);
         pedido.setTiposCerveja(tiposCerveja);
-        pedidoRepository.save(pedido);
+
+        System.out.println("Adicionando pedido no Banco de Dados...");
+        //pedidoRepository.save(pedido);
 
         return valorTotalPedido;
     }
+
+    private int calcularTotalCervejas(PedidoDTO pedidoDTO) {
+        List<TipoCerveja> tiposCerveja = pedidoDTO.getTipoCerveja();
+        int quantidadeTotalCervejas = 0;
+        for (TipoCerveja tipoCerveja: tiposCerveja) {
+            quantidadeTotalCervejas = quantidadeTotalCervejas + tipoCerveja.getQuantidade();
+        }
+
+        return quantidadeTotalCervejas;
+    }
+
 }

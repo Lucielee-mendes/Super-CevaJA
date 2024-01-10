@@ -38,7 +38,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> alterarNomeESobrenome(@PathVariable Long id, @RequestBody Usuario usuario) {
-        Usuario usuarioAlterado = usuarioService.alterarNomeESobrenomeo(id, usuario);
+        Usuario usuarioAlterado = usuarioService.alterarNomeESobrenome(id, usuario);
         return new ResponseEntity<>(usuarioAlterado, HttpStatus.NO_CONTENT);
     }
 

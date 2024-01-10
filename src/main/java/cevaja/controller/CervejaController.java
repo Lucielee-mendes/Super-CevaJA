@@ -1,7 +1,6 @@
 package cevaja.controller;
 
 import cevaja.model.TipoCerveja;
-import cevaja.model.Usuario;
 import cevaja.model.dto.TipoCervejaDTO;
 import cevaja.service.CervejaService;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequestMapping("v1/cervejas")
 public class CervejaController {
 
-    private final CervejaService cervejaService;
+    private CervejaService cervejaService;
 
     public CervejaController(CervejaService cervejaService) {
         this.cervejaService = cervejaService;

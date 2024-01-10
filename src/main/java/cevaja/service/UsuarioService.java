@@ -56,7 +56,7 @@ public class UsuarioService {
         return usuarioRemoverPorLogin;
     }
 
-    public Usuario alterarNomeESobrenomeo(Long id, Usuario usuario) {
+    public Usuario alterarNomeESobrenome(Long id, Usuario usuario) {
         Usuario usuarioParaAlterar = usuarioRepository.findById(id).get();
         if (usuarioParaAlterar == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possivel alterar um usuario inexistente. O usuario " + usuario.getNome() + " não existe no banco de dados.");

@@ -36,7 +36,7 @@ public class CervejaService {
     public TipoCerveja buscarPeloNome(String nome) {
         return cervejaRepository.findByNome(nome);
     }
-    public void adicionar(TipoCervejaDTO tipoCervejaDTO) {
+    public void  adicionar(TipoCervejaDTO tipoCervejaDTO) {
         String tipoCervejaAdicionado = tipoCervejaDTO.getNome();
         TipoCerveja tipoCervejaExistente = buscarPeloNome(tipoCervejaAdicionado);
 
