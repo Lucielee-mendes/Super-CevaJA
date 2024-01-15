@@ -5,6 +5,7 @@ import cevaja.model.Pedido;
 import cevaja.model.TipoCerveja;
 import cevaja.model.Usuario;
 import cevaja.model.dto.PedidoDTO;
+import cevaja.model.dto.TipoCervejaDTO;
 import cevaja.repository.PedidoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,15 @@ import java.util.List;
 public class PedidoService {
     private UsuarioService usuarioService;
     private PocTemperaturaService pocTemperaturaService;
+    private CervejaService cervejaService;
     private PedidoRepository pedidoRepository;
 
     private static final int QUANTIDADE_PARA_DESCONTO = 10;
 
-    public PedidoService(UsuarioService usuarioService, PocTemperaturaService pocTemperaturaService, PedidoRepository pedidoRepository) {
+    public PedidoService(UsuarioService usuarioService, PocTemperaturaService pocTemperaturaService, CervejaService cervejaService, PedidoRepository pedidoRepository) {
         this.usuarioService = usuarioService;
         this.pocTemperaturaService = pocTemperaturaService;
+        this.cervejaService = cervejaService;
         this.pedidoRepository = pedidoRepository;
     }
 
@@ -43,6 +46,15 @@ public class PedidoService {
         }
 
         List<TipoCerveja> tiposCerveja = pedidoDTO.getTipoCerveja();
+
+        for (TipoCerveja tipoCerveja : tiposCerveja) {
+            TipoCerveja tipoCervejaExistente = cervejaService.buscarPeloNome(tipoCerveja.getNome());
+
+            if (tipoCervejaExistente == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de cerveja não cadastrado: " + tipoCerveja.getNome());
+            }
+        }
+
         int quantidadeTotalCervejas = calcularTotalCervejas(pedidoDTO);
 
         if (quantidadeTotalCervejas >= QUANTIDADE_PARA_DESCONTO) {
